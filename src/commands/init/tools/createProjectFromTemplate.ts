@@ -10,34 +10,35 @@ const npmpromise = new Promise<typeof npmunload>( ( resolve, reject ) => {
   npmunload.load( ( err ) => err ? reject( err ) : resolve( npmunload ) )
 } )
 
-const getPackageInfo = ( packageName: string ) => new Promise<any>( ( resolve, reject ) => {
-  if ( getPackageInfo.cache[packageName] )
-    return resolve( getPackageInfo.cache[packageName] )
+const getPackageInfo = ( packageName: string ) =>
+  new Promise<any>( ( resolve, reject ) => {
+    if ( getPackageInfo.cache[packageName] )
+      return resolve( getPackageInfo.cache[packageName] )
 
-  https.request( {
-    method: 'GET',
-    host: 'registry.npmjs.org',
-    path: `/${packageName}`,
-    headers: { 'Content-Type': 'application/json' },
-    agent: false,
-  }, res => {
-    if ( res.statusCode !== 200 )
-      return reject( new Error( `failed to get registry.npmjs.org/${packageName} version(s).` ).message )
+    https.request( {
+      method: 'GET',
+      host: 'registry.npmjs.org',
+      path: `/${packageName}`,
+      headers: { 'Content-Type': 'application/json' },
+      agent: false,
+    }, res => {
+      if ( res.statusCode !== 200 )
+        return reject( new Error( `failed to get registry.npmjs.org/${packageName} version(s).` ).message )
 
-    let data = ''
+      let data = ''
   
-    res.setEncoding( 'utf8' )
-    res.on( 'data', chunk => data += chunk )
-    res.on( 'error', err => reject( err ) )
-    res.on( 'close', () => { resolve( console.log( 'request closed' ) ) } )
-    res.on( 'end', () => {
-      const object = JSON.parse( data )
-      resolve( object )
+      res.setEncoding( 'utf8' )
+      res.on( 'data', chunk => data += chunk )
+      res.on( 'error', err => reject( err ) )
+      res.on( 'close', () => { resolve( console.log( 'request closed' ) ) } )
+      res.on( 'end', () => {
+        const object = JSON.parse( data )
+        resolve( object )
+      } )
     } )
+      .on( 'error', err => reject( err ) )
+      .end()
   } )
-    .on( 'error', err => reject( err ) )
-    .end()
-} )
 
 getPackageInfo.cache = {} as { [key: string]: string }
 

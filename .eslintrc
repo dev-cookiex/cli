@@ -2,6 +2,7 @@
   "extends": "@cookiex",
   "ignorePatterns": [ "__TESTS__", "dist" ],
   "rules": {
+    "max-len": [ "warn", 120 ],
     "dot-notation": "off",
     "consistent-return": "off"
   }
