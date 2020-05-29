@@ -1,0 +1,12 @@
+src
+node_modules
+.circleci
+.vscode
+.eslintrc
+.gitignore
+.jest.config.jest
+*.lock
+tsconfig.json
+.cookie
+__TESTS__
+node_modules
