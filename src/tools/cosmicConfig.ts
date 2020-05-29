@@ -19,7 +19,8 @@ const getYarnGlobalNodeModulesDir = () => {
   try {
     const yarnGlobalDir = execSync( 'yarn global dir' ).toString().trim()
     const existsNodeModulesGlobalYarn = fs.existsSync( path.join( yarnGlobalDir, 'node_modules' ) )
-    if ( existsNodeModulesGlobalYarn ) return getYarnGlobalNodeModulesDir.path = path.join( yarnGlobalDir, 'node_modules' )
+    if ( existsNodeModulesGlobalYarn )
+      return getYarnGlobalNodeModulesDir.path = path.join( yarnGlobalDir, 'node_modules' )
   } catch {}
   return undefined
 }; getYarnGlobalNodeModulesDir.path = ''
@@ -55,7 +56,13 @@ interface Options {
 
 const safeCosmicInfoCreate = ( filename: string ) => {
   if ( !cosmicInfo[filename] )
-    cosmicInfo[filename] = { deepedMatches: {}, directories: [], matches: [], scannedDirectories: [], scannedModulesNames: [] }
+    cosmicInfo[filename] = {
+      deepedMatches: {},
+      directories: [],
+      matches: [],
+      scannedDirectories: [],
+      scannedModulesNames: []
+    }
 }
 
 const addDirectory = ( filename: string, directory?: string ) => {
@@ -90,7 +97,9 @@ const scanAndSearch = ( dir: string, filename: string ) =>
   } ).flat<string | boolean>( 1 ).filter( Boolean ) as string[]
 
 const searchToMatches = ( filename: string ) => {
-  cosmicInfo[filename].matches = cosmicInfo[filename].directories.map( dir => scanAndSearch( dir, filename ) ).flat<string>( 1 )
+  cosmicInfo[filename].matches =
+    cosmicInfo[filename].directories
+      .map( dir => scanAndSearch( dir, filename ) ).flat<string>( 1 )
 }
 
 const deepAllMatches = ( filename: string ) =>
@@ -110,7 +119,10 @@ const cosmicConfig = <T>( filename: string, options: Options = {} ): T => {
   return deepAllMatches( filename )
 }
 
-cosmicConfig.searchModuleDir = ( moduleName: string, options: Options & { fileName?: string, noErrors?: boolean } = {} ) => {
+cosmicConfig.searchModuleDir = (
+  moduleName: string,
+  options: Options & { fileName?: string, noErrors?: boolean } = {}
+) => {
   const dirs: ( string | undefined )[] = []
   if ( options.local ) dirs.push( getLocalNodeModulesDir() )
   if ( options.yarn ) dirs.push( getYarnGlobalNodeModulesDir() )
@@ -146,7 +158,9 @@ cosmicConfig.searchModuleDir = ( moduleName: string, options: Options & { fileNa
   return fullPathModule
 }
 
-cosmicConfig.requireAllModulesDeep = <T>( ...modulesDirs: string[] ): T => modulesDirs.reduce( ( group, current ) => deep( group, require( current ) ), {} as T )
+cosmicConfig.requireAllModulesDeep =
+  <T>( ...modulesDirs: string[] ): T =>
+    modulesDirs.reduce( ( group, current ) => deep( group, require( current ) ), {} as T )
 
 cosmicConfig.getInfo = ( filename: string ) => {
   safeCosmicInfoCreate( filename )
