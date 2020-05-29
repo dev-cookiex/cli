@@ -1,0 +1,8 @@
+{
+  "extends": "@cookiex",
+  "ignorePatterns": [ "__TESTS__", "dist" ],
+  "rules": {
+    "dot-notation": "off",
+    "consistent-return": "off"
+  }
+}
