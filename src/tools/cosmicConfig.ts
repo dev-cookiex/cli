@@ -137,8 +137,10 @@ cosmicConfig.searchModuleDir = ( moduleName: string, options: Options & { fileNa
     else return null
 
   if ( options.fileName )
-    if ( fs.existsSync( path.join( fullPathModule, options.fileName ) ) ) return path.join( moduleName, options.fileName )
-    else if ( !options.noErrors ) throw new Error( `No find ${options.fileName} in ${moduleName}` )
+    if ( fs.existsSync( path.join( fullPathModule, options.fileName ) ) )
+      return path.join( moduleName, options.fileName )
+    else if ( !options.noErrors )
+      throw new Error( `No find ${options.fileName} in ${moduleName}` )
     else return null
 
   return fullPathModule
