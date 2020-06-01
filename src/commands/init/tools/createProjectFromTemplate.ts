@@ -2,6 +2,7 @@ import fs from 'fs'
 import https from 'https'
 import npmunload from 'npm'
 import path from 'path'
+import semver from 'semver'
 
 import copy from '../../../helpers/copy'
 import util from '../utils'
@@ -68,13 +69,31 @@ const _getVersionPackage = ( packageName: string, packageVersion?: string ) =>
     } ).catch( reject )
   } )
 
-export const getVersionPackage = ( packageName: string, packageVersion?: string ) =>
+export const getVersionPackage = ( packageName: string, packageVersion: string = '@latest' ) =>
   new Promise<string>( ( resolve, reject ) => {
     npmpromise.then( npm => {
-      npm.commands.view( [ packageName, 'versions', 'dist-tags', '--json', '--quiet' ], ( err, ...args ) => {
+      npm.commands.view( [ packageName, 'versions', 'dist-tags', '--json' ], true, ( err, arg ) => {
         if ( err ) reject( err )
-        console.log( args )
-        resolve( packageVersion || '' )
+        const info: {
+          'versions': string[]
+          'dist-tags': { [ key: string ]: string }
+        } = Object.values<any>( arg ).shift()
+
+        let settedVersion = packageVersion
+        if ( settedVersion === '*' ) settedVersion = '@latest'
+
+        if ( settedVersion?.startsWith( '@' ) ) {
+          const tag = settedVersion.replace( /^@/, '' )
+          if ( info['dist-tags'][tag] ) settedVersion = info['dist-tags'][tag]
+          else return reject( new Error( `dist tag( ${tag} ) not exists in ${packageName}` ) )
+        }
+
+        const range = semver.validRange( settedVersion )
+
+        const version = info.versions.reverse().find( version => semver.satisfies( version, range ) )
+
+        if ( version ) return resolve( version )
+        return reject( new Error( `version not found for ${ packageName } using ${ settedVersion || '*' }` ) )
       } )
     } )
   } )
@@ -134,8 +153,6 @@ const createProjectFromTemplate = (
 
     const packageJson = getTemplatePackageJson( templateFolder )
 
-    console.log( JSON.stringify( packageJson, null, 2 ) )
-
     const intoPackageDependencie = (
       key: string
     ) =>
@@ -143,8 +160,7 @@ const createProjectFromTemplate = (
         .map( ( [ name, version ] ) => new Promise( async ( resolve, reject ) => {
           try {
             const rversion = await getVersionPackage( name, version )
-            console.log( `${key} - ${name}@${rversion}` )
-            packageJson[key][name] = `${rversion}`
+            packageJson[key][name] = `^${rversion}`
             resolve()
           } catch ( e ) { reject( e ) }
         } ) )
@@ -162,15 +178,11 @@ const createProjectFromTemplate = (
 
     fs.writeFileSync( 'package.json', JSON.stringify( packageJson, null, 2 ) )
 
-    process.exit()
-
     const root = templateJson.root ? path.join( templateFolder, templateJson.root ) : templateFolder
 
     const placeHolders: { [key: string]: string } = templateJson.placeHolders || {}
 
     const poly = createMapedObject( name, 'name' )
-
-    process.exit()
   
     copy.Recursive( root, output, { ignorePatterns: [ '^node_modules$', '^\\.git$', '^package\\.json$' ] }, {
       file: ( file ) => copy.Replace.file( file, placeHolders, poly ),

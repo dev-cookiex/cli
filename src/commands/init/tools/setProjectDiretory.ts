@@ -1,4 +1,5 @@
 import { Error } from '@cookiex/cli-tools'
+
 import fs from 'fs-extra'
 import mkdirp from 'mkdirp'
 
@@ -18,7 +19,10 @@ const setProjectDirectory = async ( directory: string ) => {
     await mkdirp( directory )
     process.chdir( directory )
   } catch ( error ) {
-    throw new Error( `Error occurred while trying to ${directoryExists ? 'replace' : 'create'} project directory.`, error )
+    throw new Error(
+      `Error occurred while trying to ${directoryExists ? 'replace' : 'create'} project directory.`,
+      error
+    )
   }
 
   return process.cwd()
