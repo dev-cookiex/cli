@@ -15,7 +15,7 @@ namespace CopyReplace {
 
       if ( typeof poler === 'string' )
 
-        return content.replace( RegExp( find, flags ), poly[replace] as string )
+        return content.replace( RegExp( find, flags ), poler )
 
       return content.replace( RegExp( find, flags ), replace )
 

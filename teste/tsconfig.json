@@ -1,0 +1,3 @@
+{
+  "extends": "./node_modules/@cookiex-react/native-dev-kit/tsconfig.dev.json"
+}

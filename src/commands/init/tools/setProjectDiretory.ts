@@ -5,12 +5,15 @@ import mkdirp from 'mkdirp'
 
 import alreadyExistProjectDirectory from '../messages/alreadyExistProjectDiretory'
 
-const setProjectDirectory = async ( directory: string ) => {
+const setProjectDirectory = async ( directory: string, skip: boolean = false ) => {
   const directoryExists = fs.existsSync( directory )
-  if ( directoryExists ) {
-    const replace = await alreadyExistProjectDirectory( directory )
 
-    if ( !replace ) throw new Error( directory )
+  if ( directoryExists ) {
+    if ( !skip ) {
+      const replace = await alreadyExistProjectDirectory( directory )
+
+      if ( !replace ) throw new Error( directory )
+    }
 
     fs.emptyDirSync( directory )
   }

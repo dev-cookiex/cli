@@ -1,5 +1,6 @@
 import { Error } from '@cookiex/cli-tools'
 import { Config } from '@cookiex/cli-types'
+
 import fs from 'fs-extra'
 import ora from 'ora'
 import os from 'os'
@@ -34,7 +35,7 @@ const createProject = (
   options: Init.Options
 ) => new Promise<void>( async ( resolve, reject ) => { // eslint-disable-line
 
-  const projectDirectory = await setProjectDirectory( outputFolder )
+  const projectDirectory = await setProjectDirectory( outputFolder, options.yes )
   const templateName = await getTemplateName( ctx, options )
   const templateSourceDir = fs.mkdtempSync( path.join( os.tmpdir(), 'cookie-tmp-' ) )
   const templateInstalledPatch = path.join( templateSourceDir, 'node_modules', templateName )

@@ -6,6 +6,7 @@ namespace Init {
     template?: string
     saveDefault?: boolean
     install?: boolean
+    yes?: boolean
   }
 }
 

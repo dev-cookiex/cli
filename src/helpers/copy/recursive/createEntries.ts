@@ -11,9 +11,8 @@ const createEntries = (
   toDirScan: string,
   { ignorePatterns = [], ignorePatternsInMap = [] }: Recursive.Options,
   map?: Recursive.Map
-): Recursive.Entries =>
-
-  fs.readdirSync( toDirScan ).map<Recursive.Entry>( name => {
+): Recursive.Entries => {
+  const entries = fs.readdirSync( toDirScan ).map<Recursive.Entry>( name => {
     if ( ignorePatterns.some( pattern => RegExp( pattern ).test( name ) ) ) return createInfo.nonCopy()
 
     const fullpath = path.join( toDirScan, name )
@@ -37,5 +36,7 @@ const createEntries = (
 
     return createInfo.file( parsed )
   } )
+  return entries
+}
 
 export default createEntries

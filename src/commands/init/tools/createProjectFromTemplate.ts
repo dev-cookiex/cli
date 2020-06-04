@@ -185,7 +185,10 @@ const createProjectFromTemplate = (
     const poly = createMapedObject( name, 'name' )
   
     copy.Recursive( root, output, { ignorePatterns: [ '^node_modules$', '^\\.git$', '^package\\.json$' ] }, {
-      file: ( file ) => copy.Replace.file( file, placeHolders, poly ),
+      file: ( file ) => {
+        const base = file.base.startsWith( '_' ) ? file.base.replace( '_', '.' ) : file.base
+        return copy.Replace.file( { ...file, base }, placeHolders, poly )
+      },
       dir: ( dir ) => copy.Replace.dir( dir, placeHolders, poly ),
     } )
 
