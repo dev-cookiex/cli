@@ -1,0 +1,10 @@
+{
+  "placeholders": {
+    "appOriginalName": "name.original",
+    "appNameCalmelCase": "name.camel",
+    "AppNamePascalCase": "name.pascal",
+    "app_name_snake_case": "name.snake",
+    "app-name-hyphen-case": "name.hyphen"
+  },
+  "root": "template"
+}

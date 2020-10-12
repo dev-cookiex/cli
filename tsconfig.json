@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "incremental": true,
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": [ "ESNext" ],
+    "strict": true,
     "moduleResolution": "node",
+    "typeRoots": [ "./node_modules/@types", "./src/typings" ],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
-  },
-  "exclude": [ "__TESTS__", "package.json" ]
+  }
 }

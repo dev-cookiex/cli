@@ -1,12 +1,5 @@
 node_modules
 
-dist
-build
-.cache
-
-output
-temp
-
-.cookie
-
-*.lock
+/dist
+/temp
+/.cache

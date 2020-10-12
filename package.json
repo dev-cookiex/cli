@@ -12,45 +12,26 @@
     "cookie": "./dist/bin/index.js"
   },
   "scripts": {
-    "test": "jest",
-    "prepare": "tsc"
+    "ts": "ts-node --files",
+    "cookiex": "yarn ts ./src/bin/index.ts",
+    "test": "jest"
   },
   "devDependencies": {
-    "@cookiex/cli-types": "0.1.9",
-    "@cookiex/eslint-config": "^0.3.0",
-    "@types/commander": "^2.12.2",
-    "@types/didyoumean": "^1.2.0",
-    "@types/execa": "^2.0.0",
-    "@types/fs-extra": "^8.1.0",
-    "@types/graceful-fs": "^4.1.3",
-    "@types/humps": "^1.1.3",
-    "@types/inquirer": "^6.5.0",
-    "@types/jest": "^25.2.1",
-    "@types/mkdirp": "^1.0.0",
-    "@types/node": "^13.7.1",
-    "@types/npm": "^2.0.31",
-    "@types/ora": "^3.2.0",
-    "@types/semver": "^7.1.0",
-    "eslint": "^6.8.0",
-    "jest": "^25.1.0",
-    "ts-jest": "^25.2.1",
-    "ts-node": "^8.10.1"
+    "@cookiex/eslint-config": "^0.3.3",
+    "@types/humps": "^2.0.0",
+    "@types/jest": "^26.0.14",
+    "eslint": "^7.10.0",
+    "jest": "^26.5.2",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@cookiex/cli-tools": "^0.1.3",
-    "commander": "^4.1.1",
-    "cosmiconfig": "^6.0.0",
-    "deepmerge": "^4.2.2",
-    "didyoumean": "^1.2.1",
-    "execa": "^4.0.0",
-    "find-up": "^4.1.0",
-    "fs-extra": "^8.1.0",
-    "graceful-fs": "^4.2.3",
+    "@cookiex/emitter": "^1.0.2",
+    "chalk": "^4.1.0",
+    "commander": "^6.1.0",
     "humps": "^2.0.1",
-    "inquirer": "^7.0.4",
-    "mkdirp": "^1.0.3",
-    "npm": "^6.14.5",
-    "ora": "^4.0.3",
-    "semver": "^7.1.3"
+    "ora": "^5.1.0",
+    "simple-git": "^2.21.0"
   }
 }

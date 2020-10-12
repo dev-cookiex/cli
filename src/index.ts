@@ -1,3 +1,9 @@
-import run from './run'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import CliTools from './tools'
 
-export { run }
+namespace Cli {
+  export const log = CliTools.log
+  export import Tools = CliTools
+}
+
+export = Cli
