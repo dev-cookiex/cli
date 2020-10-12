@@ -271,10 +271,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@cookiex/emitter@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cookiex/emitter/-/emitter-1.0.2.tgz#5113917eee644e8925dd8645d35c5b967c24e4e0"
-  integrity sha512-n3dWH/Ae+egvKSukFPDdblfD1eI3T6JKMeWBVzOn5sO1+63DmuzfnLf9EgSjq5mOH8KmoMm5OlG80kQdkWhkGg==
+"@cookiex/emitter@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@cookiex/emitter/-/emitter-1.0.3.tgz#6f1d750010d8a46c3da666c1de7d199ae2524276"
+  integrity sha512-U2mUP6i4nk7RYMwSgLmhuhV/KXIT/CnDD2X5XGnMpUONzPN5xeZf1/tPi1C+20wVd4BaZrcQdizAFb68X8f+uw==
 
 "@cookiex/eslint-config@^0.3.3":
   version "0.3.3"
