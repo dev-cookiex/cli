@@ -14,7 +14,9 @@
   "scripts": {
     "ts": "ts-node --files",
     "cookiex": "yarn ts ./src/bin/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "prepublishOnly": "yarn test && yarn build"
   },
   "devDependencies": {
     "@cookiex/eslint-config": "^0.3.3",

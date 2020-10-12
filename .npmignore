@@ -1,3 +1,4 @@
+/__TESTS__
 /.cache
 /.circleci
 /.vscode
@@ -9,4 +10,4 @@ node_modules
 /.gitignore
 /jest.config.jest
 /tsconfig.json
-__TESTS__
+/tsconfig.tsbuildinfo

@@ -9,6 +9,9 @@
     "typeRoots": [ "./node_modules/@types", "./src/typings" ],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "exclude": [ "package.json", "__TESTS__", "example", "temp" ]
 }

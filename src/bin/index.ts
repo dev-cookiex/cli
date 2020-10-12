@@ -1,11 +1,12 @@
 import commander from 'commander'
 
-import pkg from '../../package.json'
 import info from '../cli/info'
 import init from '../cli/init'
 import link from '../cli/link'
 import setup from '../helpers/setup'
 import log from '../tools/log'
+
+const pkg = require( '../../package.json' )
 
 commander.name( 'cookiex' )
 
