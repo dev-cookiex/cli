@@ -4,10 +4,11 @@
 /.vscode
 /example
 /src
+/temp
 node_modules
 /.eslintrc
 /.gitattributes
 /.gitignore
-/jest.config.jest
+/jest.config.js
 /tsconfig.json
 /tsconfig.tsbuildinfo
