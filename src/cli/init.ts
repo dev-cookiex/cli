@@ -24,9 +24,12 @@ init.option( '--boilerplate', 'use boilerplate template system', false )
 
 init.option( '--no-install', 'install packages', false )
 
+init.option( '--version <version>', 'set version', '1.0.0' )
+
 init.action( async ( originalName: string ) => {
   const opts = init.opts()
   const name = createName( originalName )
+  const version = opts.version
   const output = path.resolve( opts.output ?? name.hyphen )
 
   if ( await exists( output ) )
@@ -53,7 +56,7 @@ init.action( async ( originalName: string ) => {
 
   const template = new Template( directory )
 
-  Object.entries( mappedObject( { name } ) )
+  Object.entries( mappedObject( { name, version } ) )
     .forEach( ( [ key, value ] ) => template.replacer( key, value.toString() ) )
 
   await template.raise( output )
