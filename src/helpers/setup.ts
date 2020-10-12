@@ -59,8 +59,8 @@ setup.pwdPackages = () =>
 
 setup.localPackage = () =>
   exists( 'cookiex.js' )
-    .then( () => import( path.resolve( 'cookiex.js' ) ) )
-    .then( module => module.default ?? module )
-    .then( module => [ module ] )
+    .then( exists => exists ? import( path.resolve( 'cookiex.js' ) ) : null )
+    .then( module => module && ( module.default ?? module ) )
+    .then( module => module ? [ module ] : [] )
 
 export = setup
