@@ -1,9 +1,11 @@
 import Emitter from '@cookiex/emitter'
 
 import fs from 'fs'
+import { camelizeKeys } from 'humps'
 import path from 'path'
 
 import clone from '../tools/clone'
+import command from '../tools/command'
 import log from '../tools/log'
 
 class Template extends Emitter<Template.Events> {
@@ -45,6 +47,10 @@ class Template extends Emitter<Template.Events> {
   public replacer = ( match: string, value: string ) => {
     this.replacers[match] = value
     return this
+  }
+
+  public getCommitMessage = () => {
+    return this.data.commitMessage || 'init project'
   }
 
   private parsePlaceholder = () => {
