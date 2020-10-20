@@ -56,6 +56,7 @@ class Template extends Emitter<Template.Events> {
         const placeholder = this.parsePlaceholder()
         const keys = Object.keys( placeholder )
         const cloner = clone( this.root, output )
+        log.debug( '-----------------TRANSFER TEMPLATE OPEN-----------------' )
 
         cloner.on( 'file', file => {
           const content = keys.reduce(
@@ -95,6 +96,10 @@ class Template extends Emitter<Template.Events> {
         } )
 
         cloner.on( 'done', () => log.debug( 'cloning done' ) )
+
+        cloner.on( 'done', () => {
+          log.debug( '-----------------TRANSFER TEMPLATE CLOSE-----------------' )
+        } )
 
         cloner.all( ( ( event: any, data: any ) => {
           if ( !data ) log.debug( `path: ${event} done` )
