@@ -1,6 +1,6 @@
 {
   "name": "@cookiex/cli",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Cookie Command Line",
   "main": "./dist/bin/index.js",
   "repository": "https://github.com/tony-tsx/cookie-cli.git",
