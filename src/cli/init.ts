@@ -102,17 +102,11 @@ init.action( async ( original: string ) => {
     if ( opts.update )
       await template.updatePackageJson()
 
-    if ( opts.install ) {
-      progress.text = 'install dependencies'
-      await command( [ 'yarn', 'install' ], output )
-    }
+    const templateGit = simpleGit( output )
 
     if ( opts.git ) {
+
       progress.text = 'init git'
-
-      const git = simpleGit( output )
-
-      await git.init()
 
       if ( await hasGitFlow() && opts.flow ) {
         progress.text = 'init git flow'
@@ -125,23 +119,12 @@ init.action( async ( original: string ) => {
         await command( 'git flow init', output, flowOptions )
       }
 
-      if ( opts.commit ) {
-        progress.text = 'git commit message'
-        const gitignorePath = path.join( output, '.gitignore' )
-        if ( !await exists( gitignorePath ) ) {
-          log.warning( 'template dont have .gitignore, generate automatic for ignore node_modules in commit.' )
-          await fs.promises.writeFile( gitignorePath, 'node_modules' )
-        }
-        await git.add( '.' )
-          .then( () => git.commit( opts.initCommit ?? template.getCommitMessage() ) )
-      }
-
       if ( opts.repository )
 
         if ( isURL( opts.repository ) ) {
           progress.text = 'add origin to git'
           log.debug( `repository is url, set origin in git local configuration ${opts.repository}` )
-          await git.remote( [ 'add', 'origin', opts.repository ] )
+          await templateGit.remote( [ 'add', 'origin', opts.repository ] )
         }
 
         else if ( await commandExists( 'gh' ) ) {
@@ -163,11 +146,31 @@ init.action( async ( original: string ) => {
 
       if ( opts.push && opts.repository ) {
         progress.text = 'git push content'
-        await git.push( 'origin', 'master' )
+        await templateGit.push( 'origin', 'master' )
       }
 
       await command( [ 'yarn init' ], output, { y: true } )
     }
+
+    if ( opts.install ) {
+      progress.text = 'install dependencies'
+      await command( [ 'yarn', 'install' ], output )
+    }
+
+    if ( opts.git && opts.commit ) {
+      progress.text = 'git commit message'
+
+      const gitignorePath = path.join( output, '.gitignore' )
+
+      if ( !await exists( gitignorePath ) ) {
+        log.warning( 'template dont have .gitignore, generate automatic for ignore node_modules in commit.' )
+        await fs.promises.writeFile( gitignorePath, 'node_modules' )
+      }
+
+      await templateGit.add( '.' )
+        .then( () => templateGit.commit( opts.initCommit ?? template.getCommitMessage() ) )
+    }
+
     progress.succeed( 'template already to use' )
   } catch ( e ) {
     progress.stop()
