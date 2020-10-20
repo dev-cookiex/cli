@@ -47,11 +47,14 @@ const clone = ( from: string, to: string, remitter?: Emitter<clone.Events> ): Cl
       else if ( file.stat.isDirectory() ) {
         const controller = control( emitter, 'directory', file )
 
+        controller.default( file )
+
         return controller( emission => {
+          if ( emission.result === null ) return emission.exit()
           if ( emission.result ) emission.next( emission.result )
           else emission.next( ...emission.args )
           return emission.result || emission.args[0]
-        } ) as clone.Directory
+        } )
       }
 
       return file
