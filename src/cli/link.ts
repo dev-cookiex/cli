@@ -2,8 +2,8 @@ import commander from 'commander'
 import path from 'path'
 
 import CacheSystem from '../models/CacheSystem'
+import command from '../tools/command'
 import exists from '../tools/exists'
-import yarn from '../tools/yarn'
 
 const link = new commander.Command( 'link' )
 
@@ -16,8 +16,8 @@ link.action( async ( pkg: string ) => {
   let directory: string
 
   if ( !await exists( path.resolve( pkg, 'cookiex.js' ) ) ) {
-
-    const dir = path.join( await yarn( 'global dir' ), 'node_modules', pkg, 'cookiex.js' )
+    const yarnGlobalDir = await command( [ 'yarn', 'global', 'dir' ] )
+    const dir = path.join( yarnGlobalDir, 'node_modules', pkg, 'cookiex.js' )
 
     if ( await exists( dir ) ) directory = dir
 
