@@ -108,6 +108,8 @@ init.action( async ( original: string ) => {
 
       progress.text = 'init git'
 
+      await templateGit.init()
+
       if ( await hasGitFlow() && opts.flow ) {
         progress.text = 'init git flow'
         const flowOptions = Object.fromEntries(
