@@ -14,6 +14,15 @@ class Template extends Emitter<Template.Events> {
   protected root: string
   protected running: Promise<void>
   protected raising!: Promise<void>
+  protected output!: string
+
+  public static dependenciesFields = [
+    'dependencies',
+    'devDependencies',
+    'peerDependencies',
+    'optionalDependencies',
+    'bundleDependencies' 
+  ]
 
   constructor( public directory: string ) {
     super()
@@ -50,8 +59,64 @@ class Template extends Emitter<Template.Events> {
     )
   }
 
+  public updatePackageJson = () => {
+    if ( !this.raising ) throw new Error( '' )
+    return this.raising
+      .then( () => {
+        if ( !this.data.updates ) return void 0
+        log.debug( '------TEMPLATE PACKAGE JSON UPDATE DEPENDENCIES VERSIONS------' )
+        const pkg = require( path.join( this.output, 'package.json' ) )
+        const keys = Object.keys( this.data.updates )
+        const regexps = keys.map( key => RegExp( key ) )
+        const find = ( name: string ) => {
+          const index = regexps.findIndex( key => key.test( name ) )
+          if ( index < 0 ) return null
+          return this.data.updates[keys[index]]
+        }
+        const promises = Template.dependenciesFields.map( field => new Promise( ( resolve, reject ) => {
+          if ( !pkg[field] ) return resolve()
+          const entriesPromises = Object.entries( pkg[field] ).map(
+            ( [ name, version ] ) => new Promise<[string, any]>( ( resolve, reject ) => {
+              const tag = find( name )
+              if ( tag ) {
+                command( [ 'npm', 'view', name, 'dist-tags' ], { json: true } )
+                  .then( stdout => JSON.parse( stdout ) )
+                  .then( info => camelizeKeys( info ) as any )
+                  .then( info => {
+                    if ( !info.distTags[tag] ) {
+                      log.error(
+                        `not find tag ${tag} in ${name} info, please notification template maintainers`,
+                        `possibles tags ( ${Object.keys( info.distTags ).join( ' | ' )} )`
+                      )
+                      return [ name, version ]
+                    }
+                    log.debug( `update: ${name} ${version} -> ^${info.distTags[tag]}` )
+                    return [ name, `^${info.distTags[tag]}` ]
+                  } )
+                  .catch( reject )
+              }
+              else resolve( [ name, version ] )
+            } )
+          )
+          return Promise.all( entriesPromises )
+            .then( entries => {
+              if ( pkg[field] )
+                pkg[field] = Object.fromEntries( entries )
+              return Object.fromEntries( entries )
+            } )
+            .then( resolve )
+            .catch( reject )
+        } ) )
+        return Promise.all( promises )
+          .then( () => {
+            log.debug( '------TEMPLATE PACKAGE JSON UPDATE DEPENDENCIES VERSIONS------' )
+          } )
+      } )
+  }
+
   public raise = ( output: string ) => {
-    return this.raising = this.running
+    this.output = output
+    return this.raising = this.raising ?? this.running
       .then( () => {
         const placeholder = this.parsePlaceholder()
         const keys = Object.keys( placeholder )
