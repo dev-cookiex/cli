@@ -271,7 +271,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@cookiex/emitter@^1.0.3":
+"@cookiex/emitter@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@cookiex/emitter/-/emitter-1.0.5.tgz#907017b115bceaa2101a1d974900c10beae3f7f8"
   integrity sha512-vE0f0uy9PF5ebtIpDdRF8El3RO1Yel+pnkSjYPCGYtGgo36TpttMyccJXaEuBfqN6qqbtDdVLXmZJo04OkToRw==
