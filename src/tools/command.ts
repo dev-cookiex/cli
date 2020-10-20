@@ -1,7 +1,9 @@
 import { exec, ChildProcess, ExecOptions } from 'child_process'
 import { decamelizeKeys } from 'humps'
 
+import commandExists from './exists'
 import log from './log'
+
 
 class ChildProcessPromise implements PromiseLike<string> {
   constructor( cmd: string, options: ExecOptions = {} ) {
@@ -25,6 +27,7 @@ type command = {
   ( cmd: string | string[], options: command.Options ): ChildProcessPromise
   ( cmd: string | string[], cwd: string ): ChildProcessPromise
   ( cmd: string | string[], cwd: string, options: command.Options ): ChildProcessPromise
+  exists: typeof commandExists
   // ( cmd: string, execOptions: ExecOptions, options: { [key: string]: string | number | boolean } ): Promise<string>
 }
 
@@ -71,6 +74,8 @@ const command: command = (
 
   return new ChildProcessPromise( command, { cwd } )
 }
+
+command.exists = commandExists
 
 namespace command {
   export type Options = {
