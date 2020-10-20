@@ -127,6 +127,17 @@ class Template extends Emitter<Template.Events> {
         const placeholder = this.parsePlaceholder()
         const keys = Object.keys( placeholder )
         const cloner = clone( this.root, output )
+        const exclude: string[] = []
+        const excludeRegExp = ( this.data.exclude ?? [] )
+          .map( ( key: string ) => RegExp( key ) ) as RegExp[]
+
+        const excludeTest = ( ...args: string[] ) =>
+          excludeRegExp.some(
+            regexp => args.some(
+              string => regexp.test( string )
+            )
+          )
+
         log.debug( '-----------------TRANSFER TEMPLATE OPEN-----------------' )
 
         cloner.on( 'file', file => {
@@ -141,6 +152,10 @@ class Template extends Emitter<Template.Events> {
           )
 
           const target = path.join( file.targetParsed.dir, filename )
+
+          if ( excludeTest( file.filename, filename ) )
+
+            exclude.push( target )
 
           return { ...file, content, filename, target }
         } )
@@ -177,6 +192,8 @@ class Template extends Emitter<Template.Events> {
         } ) as any )
 
         return cloner
+          .then( () => exclude.map( path => fs.promises.unlink( path ) ) )
+          .then( promises => Promise.all( promises ) )
       } )
   }
 }
