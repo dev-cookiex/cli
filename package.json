@@ -19,11 +19,14 @@
     "prepublishOnly": "yarn test && yarn build"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@cookiex/eslint-config": "^0.4.0",
     "@types/command-exists": "^1.2.0",
     "@types/humps": "^2.0.0",
     "@types/jest": "^26.0.14",
     "eslint": "^7.10.0",
+    "husky": "^4.3.0",
     "jest": "^26.5.2",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0",
