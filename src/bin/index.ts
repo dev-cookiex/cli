@@ -4,6 +4,7 @@ import commander from 'commander'
 import info from '../cli/info'
 import init from '../cli/init'
 import link from '../cli/link'
+import unlink from '../cli/unlink'
 import setup from '../helpers/setup'
 import log from '../tools/log'
 
@@ -22,6 +23,8 @@ commander.on( 'option:debug', () => log.debug.enable = commander.debug )
 commander.addCommand( init )
 
 commander.addCommand( link )
+
+commander.addCommand( unlink )
 
 commander.addCommand( info )
 

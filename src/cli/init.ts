@@ -71,6 +71,15 @@ init.action( async ( original: string ) => {
 
   const progress = ora( 'download template' )
 
+  const templates: { [key: string]: string } = {
+    'standard': '@cookiex/standard-template',
+    'react-dom': '@cookiex-react/dom-standard-template',
+    'react-native': '@cookiex-react/native-standard-template',
+    'cookiex-module': '@cookiex/module-template'
+  }
+
+  opts.template = templates[opts.template] ?? opts.template
+
   try {
     progress.start()
 
