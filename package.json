@@ -1,6 +1,6 @@
 {
   "name": "@cookiex/cli",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Cookie Command Line",
   "main": "./dist/bin/index.js",
   "repository": "https://github.com/tony-tsx/cookie-cli.git",
@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "cookiex": "./dist/bin/index.js",
-    "cookie": "./dist/bin/index.js"
+    "cookiex": "dist/bin/index.js",
+    "cookie": "dist/bin/index.js"
   },
   "scripts": {
     "ts": "ts-node --files",
