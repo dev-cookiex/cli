@@ -36,7 +36,6 @@ class CacheSystem {
   public ready() { return this.promise }
 
   public get( name: string ): any
-  public get<T>( name: string ): any
   public get<T>( name: string, def: T ): T
   public get( name: string, def?: any ): any {
     if ( !this.data ) throw new Error( '' )

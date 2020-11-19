@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@cookiex/emitter": "^1.0.5",
+    "@cookiex/sleeping-promise": "^0.0.1",
     "chalk": "^4.1.0",
     "command-exists": "^1.2.9",
     "commander": "^6.1.0",

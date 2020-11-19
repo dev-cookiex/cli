@@ -434,6 +434,11 @@
     eslint-plugin-sort-class-members "^1.6.0"
     typescript "^4.0.3"
 
+"@cookiex/sleeping-promise@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@cookiex/sleeping-promise/-/sleeping-promise-0.0.1.tgz#99f4c2d842aaba19a81382e84934a1344162b1aa"
+  integrity sha512-h9MKHAd4wXAFpn1GknEY0wLMOA16Ag+0G0yVWj80spCPBoJOh+ZtEDCSQhOmre7JnFhAcc8R2qyDgcNa0BLMCA==
+
 "@eslint/eslintrc@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.1.3.tgz#7d1a2b2358552cc04834c0979bd4275362e37085"
