@@ -2,7 +2,7 @@
   "name": "@cookiex/cli",
   "version": "0.2.9",
   "description": "Cookie Command Line",
-  "main": "./dist/bin/index.js",
+  "main": "./dist/index.js",
   "repository": "https://github.com/tony-tsx/cookie-cli.git",
   "author": "tony-tsx <tony.js@zoho.eu>",
   "license": "MIT",
