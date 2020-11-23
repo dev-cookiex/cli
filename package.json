@@ -15,7 +15,7 @@
     "ts": "ts-node --files",
     "cookiex": "yarn ts ./src/bin/index.ts",
     "test": "jest",
-    "build": "tsc",
+    "build": "rm -rf ./dist && tsc",
     "prepublishOnly": "yarn test && yarn build"
   },
   "devDependencies": {

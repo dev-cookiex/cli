@@ -194,6 +194,7 @@ class Template extends Emitter<Template.Events> {
         return cloner
           .then( () => exclude.map( path => fs.promises.unlink( path ) ) )
           .then( promises => Promise.all( promises ) )
+          .then( () => {} )
       } )
   }
 }
