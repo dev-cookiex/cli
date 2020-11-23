@@ -3,7 +3,8 @@ import createStore from './createStore'
 
 const initialState: store.State = {
   modules: [],
-  loading: false
+  loading: false,
+  setupEnd: false,
 }
 
 const store = createStore( initialState, {
@@ -17,6 +18,7 @@ namespace store {
   export interface State {
     modules: Module[]
     loading: boolean
+    setupEnd: boolean
   }
 }
 

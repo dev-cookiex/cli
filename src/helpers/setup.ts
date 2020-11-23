@@ -17,6 +17,7 @@ const setup = ( program: commander.CommanderStatic ) =>
         module.commands.forEach( command => program.addCommand( command ) )
       } )
       store.dispatch( 'ADD_MODULES', ...modules )
+      store.dispatch( { setupEnd: true } )
     } )
 
 setup.packages = () =>
