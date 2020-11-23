@@ -414,6 +414,11 @@
   resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-11.0.0.tgz#719cf05fcc1abb6533610a2e0f5dd1e61eac14fe"
   integrity sha512-VoNqai1vR5anRF5Tuh/+SWDFk7xi7oMwHrHrbm1BprYXjB2RJsWLhUrStMssDxEl5lW/z3EUdg8RvH/IUBccSQ==
 
+"@cookiex/deep@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@cookiex/deep/-/deep-0.0.2.tgz#4405e77d574f6d570e6bd4865e57a3044974e23a"
+  integrity sha512-ZTLHugwApLVDpKcO0D1/tCL8Gz7qUE18ldU1DU4sKMQ5296zELffVkedg1rI4zEVpeIqoC2xBBPt46PwVwx//A==
+
 "@cookiex/emitter@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@cookiex/emitter/-/emitter-1.0.5.tgz#907017b115bceaa2101a1d974900c10beae3f7f8"

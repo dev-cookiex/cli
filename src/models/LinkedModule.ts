@@ -4,6 +4,7 @@ import SleepingPromise from '@cookiex/sleeping-promise'
 import path from 'path'
 
 import exists from '../tools/exists'
+import log from '../tools/log'
 import CookiexModule from './Module'
 
 class LinkedModule extends SleepingPromise<LinkedModule.Module> {
@@ -18,21 +19,27 @@ class LinkedModule extends SleepingPromise<LinkedModule.Module> {
   protected promise: Promise<void>
 
   public static from = ( ...paths: string[] ) => paths.map( path => new LinkedModule( path ) )
-
-  constructor( public fullpath: string ) {
+  public fullpath: string
+  constructor( fullpath: string ) {
     super( resolve => {
-      resolve( new LinkedModule.Module( require( fullpath ), require( this.packageJsonPath ) ) )
+      resolve( new LinkedModule.Module( require( this.fullpath ), require( this.packageJsonPath ) ) )
     } )
-    this.path = path.parse( fullpath )
+    this.fullpath = path.resolve( fullpath )
+    this.path = path.parse( this.fullpath )
     if ( this.path.name !== 'cookiex' ) throw new Error( 'Incorrect module name' )
     this.folderName = path.parse( this.path.dir ).name
     this.packageJsonPath = path.join( this.path.dir, 'package.json' )
     this.promise = new Promise( async ( resolve, reject ) => {
-      if ( !await exists( this.fullpath ) ) return reject( new Error( '' ) )
-      if ( !await exists( this.packageJsonPath ) ) return reject( new Error( '' ) )
+      if ( !await exists( this.fullpath ) ) return reject( new Error( 'Cannot find cookiex module' ) )
+      if ( !await exists( this.packageJsonPath ) ) return reject( new Error( 'Cannot find module' ) )
       this.packageJson = require( this.packageJsonPath )
+      log.debug( 'Link cookiex module', this.packageJson.name )
+      resolve()
     } )
-    this.promise.catch( () => this._ok = false )
+    this.promise.catch( reason => {
+      log.debug( reason )
+      this._ok = false
+    } )
   }
 
   public get module() { return this.then( module => module ) }

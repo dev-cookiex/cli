@@ -33,6 +33,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
+    "@cookiex/deep": "^0.0.2",
     "@cookiex/emitter": "^1.0.5",
     "@cookiex/sleeping-promise": "^0.0.1",
     "chalk": "^4.1.0",

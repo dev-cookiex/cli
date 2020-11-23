@@ -2,18 +2,21 @@ import commander from 'commander'
 
 import CacheSystem from '../models/CacheSystem'
 import LinkedModule from '../models/LinkedModule'
+import store from '../store'
 import arrayFilterPromise from '../tools/arrayFilterPromise'
 import exists from '../tools/exists'
 import search from '../tools/search'
 
-const setup = ( program: commander.CommanderStatic ) =>
+const setup = ( program: commander.CommanderStatic ) => 
   setup.packages()
+    .then( linkedModules => linkedModules.concat( program.load ) )
     .then( linkedModules => arrayFilterPromise( linkedModules, linkedModule => linkedModule.ok ) )
     .then( linkedModules => Promise.all( linkedModules ) )
     .then( modules => {
       modules.forEach( module => {
         module.commands.forEach( command => program.addCommand( command ) )
       } )
+      store.dispatch( 'ADD_MODULES', ...modules )
     } )
 
 setup.packages = () =>
